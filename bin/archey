@@ -1,23 +1,11 @@
 #!/bin/bash
 
-# Detect the packager.
-if [ -x /usr/local/bin/brew ]; then
-  packager=homebrew
-elif command -v port >/dev/null; then
-  packager=macports
-else
-  packager=none
-fi
-
 # Get the command line options
 opt_nocolor=f
 opt_force_color=f
 for arg in "$@"
 do
   case "${arg}" in
-    -m|--macports)
-      packager=macports
-      ;;
     -b|--nocolor)
       opt_nocolor=t
       ;;
@@ -44,21 +32,16 @@ done
 # System Variables
 user=$(whoami)
 hostname=$(hostname | sed 's/.local//g')
-ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 distro="OS X $(sw_vers -productVersion)"
 kernel=$(uname)
-uptime=$(uptime | sed 's/.*up \+\([^,]*\), .*/\1/')
 shell="$SHELL"
 terminal="$TERM ${TERM_PROGRAM//_/ }"
 cpu=$(sysctl -n machdep.cpu.brand_string)
-battery=$(ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%.2f%%", $10/$5 * 100)}')
 
 # removes (R) and (TM) from the CPU name so it fits in a standard 80 window
 cpu=$(echo "$cpu" | awk '$1=$1' | sed 's/([A-Z]\{1,2\})//g')
 
 ram="$(( $(sysctl -n hw.memsize) / 1024 ** 3  )) GB"
-disk=$(df | head -2 | tail -1 | awk '{print $5}')
-
 
 # Set up colors if:
 # * stdout is a tty
@@ -74,18 +57,6 @@ then
   textColor=$(tput setaf 6 2>/dev/null)
   normal=$(tput    sgr0 2>/dev/null)
 fi
-
-case "${packager}" in
-  homebrew)
-    packagehandler=$(brew list -1 | wc -l | awk '{print $1 }')
-    ;;
-  macports)
-    packagehandler=$(port installed | wc -l | awk '{print $1 }')
-    ;;
-  *)
-    packagehandler=0
-    ;;
-esac
 
 userText="${textColor}User:${normal} ${user}${normal}"
 hostnameText="${textColor}Hostname:${normal} ${hostname}${normal}"
@@ -108,19 +79,19 @@ else
 # The ${foo#  } is a cheat so that it lines up here as well
 # as when run.
   echo -e "
-${GREEN#  }                 ###                  $userText
-${GREEN#  }               ####                   $hostnameText
-${GREEN#  }               ###                    $distroText
-${GREEN#  }       #######    #######             $kernelText
-${YELLOW# }     ######################           $uptimeText
-${YELLOW# }    #####################             $shellText
-${RED#    }    ####################              $terminalText
-${RED#    }    ####################              $packagehandlerText
-${RED#    }    #####################             $cpuText
-${PURPLE# }     ######################           $memoryText
-${PURPLE# }      ####################            $diskText
-${BLUE#   }        ################              $batteryText
-${BLUE#   }         ####     #####               $ipText
+${GREEN#  }                 ###                  
+${GREEN#  }               ####                   
+${GREEN#  }               ###                    
+${GREEN#  }       #######    #######             $userText
+${YELLOW# }     ######################           $hostnameText
+${YELLOW# }    #####################             $distroText
+${RED#    }    ####################              $kernelText
+${RED#    }    ####################              $shellText
+${RED#    }    #####################             $terminalText
+${PURPLE# }     ######################           $cpuText
+${PURPLE# }      ####################            $memoryText
+${BLUE#   }        ################              
+${BLUE#   }         ####     #####               
 ${normal}
 "
 fi

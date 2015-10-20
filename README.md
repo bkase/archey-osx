@@ -1,21 +1,24 @@
-#Archey for OS X
+#Archey for OS X (the fast fork)
 An archey script for OS X.
+This fork runs FAST. ~50ms on my machine. I have removed information I don't personally need in order to speed up execution time.
+For reference, `master` of the most up-to-date fork takes ~450ms on my machine.
 
 ```
 
                  ###
-               ####                   User: jhann
-               ###                    Hostname: Hann
-       #######    #######             Distro: OS X 10.8.4
-     ######################           Kernel: Darwin
-    #####################             Uptime:  2:03
-    ####################              Shell: /bin/bash
-    ####################              Terminal: xterm
-    #####################             Packages: 70
-     ######################           CPU: Intel Core i5-3210M CPU @ 2.50GHz
-      ####################            Memory: 8 GB
-        ################              Disk: 56%
-         ####     #####               IP Address: 192.168.0.2
+               ####
+               ###
+       #######    #######             User: bkase
+     ######################           Hostname: kakariko
+    #####################             Distro: OS X 10.11
+    ####################              Kernel: Darwin
+    ####################              Shell: /bin/zsh
+    #####################             Terminal: xterm-256color iTerm.app
+     ######################           CPU: Intel Core i7-3740QM CPU @ 2.70GHz
+      ####################            Memory: 16 GB
+        ################
+         ####     #####
+
 ```
 
 ##Table Of Contents
@@ -39,7 +42,6 @@ brew install archey
 ------------
 * -b,  --nocolor : Use black & white logo
 * -c,  --color   : Force using a color Logo
-* -m,  --macports : Use MacPorts instead of Homebrew to display package count
 * -h,  --help : Show help
 
 
@@ -50,6 +52,7 @@ brew install archey
 * [Gary00](https://github.com/Gary00/archey-osx) - A fork of joshfinnie's Archey port, and the base of this script.
 * [rdlugosz](https://github.com/rdlugosz) - Fixing a math error with memory caculations.
 * [docwhat](https://github.com/docwhat) - Shell expertise and cleanups.
+* [obihann](https://github.com/obihann) - Cleanup + current maintainer.
 
 ##License
 
