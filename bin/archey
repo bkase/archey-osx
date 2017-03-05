@@ -34,7 +34,7 @@ user=$(whoami)
 hostname=$(hostname | sed 's/.local//g')
 distro="OS X $(sw_vers -productVersion)"
 kernel=$(uname)
-shell="$SHELL"
+shell="$(basename $SHELL)"
 terminal="$TERM ${TERM_PROGRAM//_/ }"
 cpu=$(sysctl -n machdep.cpu.brand_string)
 
